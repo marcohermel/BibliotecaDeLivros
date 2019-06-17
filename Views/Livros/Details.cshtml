@@ -60,11 +60,11 @@
     {
         @if (Model.UserId == null)
         {
-            <a asp-action="Rent" class="btn btn-sm btn-outline-dark" asp-route-id="@Model.Id">Alugar <i class="fa fa-undo"></i></a>
+            <a asp-action="Rent" class="btn btn-sm btn-outline-dark" asp-route-id="@Model.Id">Alugar <i class="fa fa-book-open"></i></a>
         }
         else if(Model.UserId == ViewBag.UserIdLogado)
         {
-            <a asp-action="GiveBack" class="btn btn-sm btn-outline-dark" asp-route-id="@Model.Id">Devolver <i class="fa-book-open"></i></a>
+            <a asp-action="GiveBack" class="btn btn-sm btn-outline-dark" asp-route-id="@Model.Id">Devolver <i class="fa fa-undo"></i></a>
         }
     }
     <a asp-action="Index" class="btn btn-sm btn-outline-dark" >Voltar para a Lista</a>
