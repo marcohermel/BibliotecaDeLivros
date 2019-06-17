@@ -1,0 +1,71 @@
+﻿@model Biblioteca.Models.Livro
+
+@{
+    ViewData["Title"] = "Detalhes do Livro";
+}
+
+<h1> @ViewData["Title"]</h1>
+
+<div>
+    <h4>Livro</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Autor)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Autor)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ano)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ano)
+        </dd>
+        <dt class="col-sm-2">
+            Disponibilidade
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.UserId == null ? "Disponível" : "Alugado")
+        </dd>
+        @if (User.IsAdmin())
+        {
+        <dt class="col-sm-2">
+            Alugado Por
+        </dt>
+        <dd class="col-sm-10">
+            @(Model.UserId != null ? Model.User?.Nome + " " + Model.User?.Sobrenome : " - ")
+        </dd>
+        }
+    </dl>
+</div>
+<div>
+    @if (User.IsAdmin())
+    {
+    <a asp-action="Edit"  class="btn btn-sm btn-outline-dark" asp-route-id="@Model.Id">Editar <i class="fa fa-pen"></i> </a>
+    }
+    else
+    {
+        @if (Model.UserId == null)
+        {
+            <a asp-action="Rent" class="btn btn-sm btn-outline-dark" asp-route-id="@Model.Id">Alugar <i class="fa fa-undo"></i></a>
+        }
+        else if(Model.UserId == ViewBag.UserIdLogado)
+        {
+            <a asp-action="GiveBack" class="btn btn-sm btn-outline-dark" asp-route-id="@Model.Id">Devolver <i class="fa-book-open"></i></a>
+        }
+    }
+    <a asp-action="Index" class="btn btn-sm btn-outline-dark" >Voltar para a Lista</a>
+</div>

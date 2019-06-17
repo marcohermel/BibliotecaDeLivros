@@ -1,0 +1,53 @@
+﻿@model LivrosIndexViewModel
+
+@{
+    ViewData["Title"] = "Lista de Livros";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+@if (User.IsAdmin())
+{
+    <p>
+        <a asp-action="Create" class="btn btn-sm btn-outline-dark">Cadastrar Livro <i class="fa fa-book"></i></a>
+        <a asp-action="Create"></a>
+    </p>
+}
+
+<form asp-action="Index">
+    <div class="container">
+        <div class="row">
+            <label class="control-label"> Nome Livro, Autor ou Ano</label>
+            <input asp-for="Nome" class="form-control" />
+            @if (User.IsAdmin())
+            {
+                <label asp-for="UserId" class="control-label"></label>
+                 @Html.DropDownListFor(m => m.UserId, new SelectList(ViewBag.Users, "Id", "Nome"), "", new { @class = "form-control" });
+            }
+            &nbsp;
+        </div>
+        <div class="row">
+            <div class=" form-group">
+                <button type="submit" class="btn btn-sm btn-outline-dark">Filtrar <i class=" fa fa-search"></i></button>
+                <a asp-action="Index" class="btn btn-sm btn-outline-dark">Limpar Filtro <i class="fa fa-eraser"></i></a>
+            </div>
+            &nbsp;
+        </div>
+    </div>
+</form>
+
+@await Html.PartialAsync("_Index", Model);
+
+@section Scripts {
+    <script>
+        var error = "@ViewData["error"]" ;
+        var success = "@ViewData["success"]";
+        if (error.length > 0 || success.length > 0) {
+        $(".modal").modal("show");
+    }
+    </script>
+}
+
+
+
+

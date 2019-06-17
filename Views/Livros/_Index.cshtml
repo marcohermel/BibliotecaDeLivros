@@ -1,0 +1,93 @@
+﻿
+@model LivrosIndexViewModel
+
+@if (Model.Livros.Count() == 0)
+{
+    <p>
+        Nenhum livro cadastrado.
+    </p>
+}
+else
+{
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Livros.First().Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Livros.First().Nome)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Livros.First().Autor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Livros.First().Ano)
+                </th>
+                @if (User.IsAdmin())
+                {
+                    <th>Alugado Por</th>
+                }
+                else
+                {
+                    <th>Disponibilidade</th>
+                }
+
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Livros)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Autor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ano)
+                    </td>
+                    @if (User.IsAdmin())
+                    {
+                        <td>
+                            @(item.UserId != null ? item.User?.Nome + " " + item.User?.Sobrenome : " - ")
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @(item.UserId == null ? "Disponível" : "Alugado")
+                        </td>
+                    }
+                    <td>
+                        <a asp-action="Details"class="btn btn-sm btn-outline-dark" asp-route-id="@item.Id"> Detalhes <i class="fa fa-file"></i></a>
+                        @if (User.IsAdmin())
+                        {
+                            <a asp-action="Edit" class="btn btn-sm btn-outline-dark" asp-route-id="@item.Id"> Editar  <i class="fa fa-pen"></i> </a>
+                            <a asp-action="Delete" class="btn btn-sm btn-outline-danger" asp-route-id="@item.Id"> Deletar <i class="fa fa-trash"></i></a>
+                        }
+                        else
+                        {
+                            @if (item.UserId == Model.UserIdLogado)
+                            {
+                                <a asp-action="GiveBack" class="btn btn-sm btn-outline-dark" asp-route-id="@item.Id">Devolver <i class="fa fa-undo"></i></a>
+                            }
+                            else
+                            {
+                                <a asp-action="Rent" class="btn btn-sm btn-outline-dark" asp-route-id="@item.Id">Alugar <i class="fa fa-book-open"></i></a>
+                            }
+                        }
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
