@@ -19,4 +19,6 @@ Instruções para rodar o projeto.
 - Executar a Migration com o comando Update-Database para a criar a base de dados
 - Executar o projeto
 
-Senha do perfil admin: Admin123!
+Dados de acesso do perfil admin: 
+usuário:admin@admin.com
+senha:Admin123!
