@@ -82,9 +82,10 @@ namespace Biblioteca
                     template: "{controller=Livros}/{action=Index}/{id?}");
             });
 
+            SeedLivros(serviceProvider).Wait();
             CreateRoles(serviceProvider).Wait();
             CreateAdmin(serviceProvider).Wait();
-            SeedLivros(serviceProvider).Wait();
+        
         }
         private async Task CreateRoles(IServiceProvider serviceProvider)
         {
