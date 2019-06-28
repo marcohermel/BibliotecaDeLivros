@@ -115,7 +115,7 @@ namespace Biblioteca
         private async Task SeedLivros(IServiceProvider serviceProvider)
         {
             var dbContext = serviceProvider.GetRequiredService<ApplicationDbContext>();
-
+            dbContext.Database.Migrate();
             if (dbContext.Livro.Count() == 0)
             {
                 IEnumerable<Livro> seedLivros = new List<Livro>() {
